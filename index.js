@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
@@ -19,6 +20,8 @@ async function run() {
     try {
         await client.connect();
         const inventoryCollection = client.db('rentigerWarehouse').collection('inventory');
+
+        const inventoryUser = client.db('rentigerWarehouse').collection('user');
 
         app.get('/inventory', async (req, res) => {
             const query = {};
@@ -79,6 +82,21 @@ async function run() {
 
             const result = await inventoryCollection.updateOne(filter, updateDoc);
             res.send(result);
+        })
+
+        app.post('/login', async (req, res) => {
+
+
+            // const options = { upsert: true };
+            const inventory = req.body;
+            const result = await inventoryUser.insertOne(inventory);
+            console.log(req.body);
+            res.send({
+                token: '91b35b18639aba175001bee7e80a2ea3d921f1a98f28c50bfdabfc885b964d4717ea62deb6d8ecec1edbdc11488437a524b94e57f60beb37b4800b151083d885'
+            })
+
+
+
         })
     }
     finally {
