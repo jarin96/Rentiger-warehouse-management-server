@@ -47,15 +47,12 @@ async function run() {
             // console.log(req.params + 'rentiger');
         });
         app.get('/item/:email', async (req, res) => {
-            // const email = req.params.email;
-            // console.log(req);
             const user = {
                 email: req.params.email
             }
             const result = await inventoryCollection.find(user).toArray();
             console.log(result);
             res.send(result);
-            // console.log(req.params.email);
         });
 
     }
