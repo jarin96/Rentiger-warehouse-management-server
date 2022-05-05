@@ -87,7 +87,6 @@ async function run() {
         app.post('/login', async (req, res) => {
 
 
-            // const options = { upsert: true };
             const inventory = req.body;
             const result = await inventoryUser.insertOne(inventory);
             console.log(req.body);
